@@ -1,0 +1,29 @@
+{
+  "name": "marathon-node",
+  "version": "0.0.1",
+  "description": "Node.js client library for Mesos Marathon's REST API",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elasticio/marathon-node.git"
+  },
+  "author": "elastic.io",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/elasticio/marathon-node/issues"
+  },
+  "homepage": "https://github.com/elasticio/marathon-node",
+  "dependencies": {
+    "lodash": "~3.9.3",
+    "request-promise": "~0.4.2"
+  },
+  "devDependencies": {
+    "gulp": "~3.8.11",
+    "gulp-jasmine": "0.2.0",
+    "gulp-istanbul": "~0.8.1",
+    "del": "~1.2.0"
+  }
+}

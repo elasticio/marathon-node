@@ -50,6 +50,7 @@ describe('marathon', function() {
             function onError(err) {
                 expect(scope.isDone()).toEqual(true);
                 expect(err.message).toEqual('Marathon response was: 400 - no-response');
+                expect(err.statusCode).toEqual(400);
                 done();
             }
         });

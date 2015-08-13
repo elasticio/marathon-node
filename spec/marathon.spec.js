@@ -29,12 +29,28 @@ describe('marathon', function() {
         it('should make ping with timeout', function (done) {
             var scope = nock(MARATHON_HOST)
                 .get('/ping')
+                .delayConnection(1000)
                 .reply(200, 'pong');
 
             marathon.misc.ping({timeout: 2000}).then(onSuccess).done();
 
             function onSuccess(data) {
                 expect(data).toEqual('pong');
+                expect(scope.isDone()).toEqual(true);
+                done();
+            }
+        });
+
+        it('should report about timeout', function (done) {
+            var scope = nock(MARATHON_HOST)
+                .get('/ping')
+                .delayConnection(3000)
+                .reply(200, 'pong');
+
+            marathon.misc.ping({timeout: 2000}).catch(onError).done();
+
+            function onError(err) {
+                expect(err.message).toEqual('Marathon response was: Error: ETIMEDOUT');
                 expect(scope.isDone()).toEqual(true);
                 done();
             }

@@ -26,7 +26,7 @@ describe('marathon', function() {
             }
         });
 
-        it('should make ping with timeout', function (done) {
+        it('should make ping with timeout & rely pong', function (done) {
             var scope = nock(MARATHON_HOST)
                 .get('/ping')
                 .delayConnection(1000)
@@ -41,7 +41,7 @@ describe('marathon', function() {
             }
         });
 
-        it('should report about timeout', function (done) {
+        it('should report ETIMEDOUT on timeout', function (done) {
             var scope = nock(MARATHON_HOST)
                 .get('/ping')
                 .delayConnection(3000)

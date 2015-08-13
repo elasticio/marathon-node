@@ -4,7 +4,7 @@
   "description": "Node.js client library for Mesos Marathon's REST API",
   "main": "index.js",
   "scripts": {
-    "test": "gulp test"
+    "test": "./node_modules/gulp/bin/gulp.js test"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,9 @@
     "gulp": "~3.8.11",
     "gulp-jasmine": "0.2.0",
     "gulp-istanbul": "~0.8.1",
-    "del": "~1.2.0"
+    "gulp-coveralls": "^0.1.4",
+    "gulp-jscs": "~1.6.0",
+    "del": "~1.2.0",
+    "nock": "^1.6.1"
   }
 }

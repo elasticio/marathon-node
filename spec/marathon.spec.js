@@ -49,8 +49,11 @@ describe('marathon', function() {
 
             function onError(err) {
                 expect(scope.isDone()).toEqual(true);
+                expect(err.name).toEqual('StatusCodeError');
                 expect(err.message).toEqual('Marathon response was: 400 - no-response');
                 expect(err.statusCode).toEqual(400);
+                expect(err.options.url).toEqual('http://01.02.03.04:5678/ping');
+                expect(err.options.timeout).toEqual(2000);
                 done();
             }
         });

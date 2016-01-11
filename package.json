@@ -1,6 +1,6 @@
 {
   "name": "marathon-node",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Node.js client library for Mesos Marathon's REST API",
   "main": "index.js",
   "scripts": {

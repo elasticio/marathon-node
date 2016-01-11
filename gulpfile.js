@@ -11,7 +11,7 @@ var paths = {
 };
 
 gulp.task('jasmine', function() {
-    gulp
+    return gulp
         .src(paths.spec)
         .pipe(jasmine({
             includeStackTrace: true,
@@ -19,7 +19,7 @@ gulp.task('jasmine', function() {
         }));
 });
 gulp.task('coveralls', ['coverage'], function() {
-    gulp.src(paths.coverageReport).pipe(coveralls());
+    return gulp.src(paths.coverageReport).pipe(coveralls());
 });
 
 gulp.task('coverage', function(cb) {

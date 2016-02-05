@@ -13,7 +13,7 @@ marathon.apps
 An optional set of options
 
 - timeout: passed to request-promise
-- doNotUrlResolve: *true* uses MARATHON_URL as is and appends the app path to it; *false* use the node URL module to resolve the MARATHON_URL then append the app path
+- doNotUrlResolve: ***true*** uses MARATHON_URL as is and appends the app path to it; ***false*** use the node URL module to resolve the MARATHON_URL then append the app path
 - logTime: log time at various stages
 
 

@@ -3,6 +3,7 @@ describe('marathon', function() {
     var Marathon = require('../lib/marathon.js');
     var nock = require('nock');
     var MARATHON_HOST = 'http://01.02.03.04:5678';
+    var expect = require('chai').expect;
 
     var marathon;
 
@@ -20,8 +21,8 @@ describe('marathon', function() {
             marathon.misc.ping().then(onSuccess).done();
 
             function onSuccess(data) {
-                expect(data).toEqual('pong');
-                expect(scope.isDone()).toEqual(true);
+                expect(data).to.equal('pong');
+                expect(scope.isDone()).to.equal(true);
                 done();
             }
         });
@@ -35,13 +36,16 @@ describe('marathon', function() {
             marathon.misc.ping({timeout: 2000}).then(onSuccess).done();
 
             function onSuccess(data) {
-                expect(data).toEqual('pong');
-                expect(scope.isDone()).toEqual(true);
+                expect(data).to.equal('pong');
+                expect(scope.isDone()).to.equal(true);
                 done();
             }
         });
 
         it('should report ETIMEDOUT on timeout', function (done) {
+
+            this.timeout(4000);  // set mocha timeout longer then the testing timeout
+
             var scope = nock(MARATHON_HOST)
                 .get('/ping')
                 .delayConnection(3000)
@@ -50,8 +54,8 @@ describe('marathon', function() {
             marathon.misc.ping({timeout: 2000}).catch(onError).done();
 
             function onError(err) {
-                expect(err.message).toEqual('Marathon response was: Error: ETIMEDOUT');
-                expect(scope.isDone()).toEqual(true);
+                expect(err.message).to.equal('Marathon response was: Error: ETIMEDOUT');
+                expect(scope.isDone()).to.equal(true);
                 done();
             }
         });
@@ -64,12 +68,12 @@ describe('marathon', function() {
             marathon.misc.ping({timeout: 2000}).catch(onError).done();
 
             function onError(err) {
-                expect(scope.isDone()).toEqual(true);
-                expect(err.name).toEqual('StatusCodeError');
-                expect(err.message).toEqual('Marathon response was: 400 - no-response');
-                expect(err.statusCode).toEqual(400);
-                expect(err.options.url).toEqual('http://01.02.03.04:5678/ping');
-                expect(err.options.timeout).toEqual(2000);
+                expect(scope.isDone()).to.equal(true);
+                expect(err.name).to.equal('StatusCodeError');
+                expect(err.message).to.equal('Marathon response was: 400 - no-response');
+                expect(err.statusCode).to.equal(400);
+                expect(err.options.url).to.equal('http://01.02.03.04:5678/ping');
+                expect(err.options.timeout).to.equal(2000);
                 done();
             }
         });

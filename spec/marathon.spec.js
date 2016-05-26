@@ -79,3 +79,26 @@ describe('marathon', function() {
 
 
 });
+
+describe('config', function() {
+    var Marathon = require('../lib/marathon.js');
+    var nock = require('nock');
+
+    it('should allow marathon urls with paths', function (done) {
+      var MARATHON_HOST='http://01.02.03.04:5678';
+      var pathedUrl = MARATHON_HOST + '/service/marathon';
+
+      var scope = nock(MARATHON_HOST)
+          .get('/service/marathon/ping')
+          .reply(200, 'pong');
+
+      var marathon = new Marathon(pathedUrl);
+      marathon.misc.ping().then(onSuccess).done();
+
+      function onSuccess(data) {
+          expect(data).toEqual('pong');
+          expect(scope.isDone()).toEqual(true);
+          done();
+      }
+    });
+});

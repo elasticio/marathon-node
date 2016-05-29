@@ -1,10 +1,10 @@
 {
   "name": "marathon-node",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "Node.js client library for Mesos Marathon's REST API",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/gulp/bin/gulp.js test"
+    "test": "gulp test"
   },
   "repository": {
     "type": "git",

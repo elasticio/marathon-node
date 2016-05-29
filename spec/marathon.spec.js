@@ -73,11 +73,7 @@ describe('marathon', function() {
                 done();
             }
         });
-
     });
-
-
-
 });
 
 describe('config', function() {

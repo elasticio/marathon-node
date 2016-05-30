@@ -1,4 +1,4 @@
-# marathon-node
+# marathon-node [![CircleCI](https://circleci.com/gh/elasticio/marathon-node.svg?style=svg)](https://circleci.com/gh/elasticio/marathon-node)
 Node.js client library for Mesos Marathon's REST API powered by Bluebird promises.
 
 ```javascript

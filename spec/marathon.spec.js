@@ -6,13 +6,13 @@ describe('marathon', function() {
 
     var marathon;
 
-    beforeEach(function(){
+    beforeEach(function() {
         marathon = new Marathon(MARATHON_HOST);
     });
 
     describe('ping', function() {
 
-        it('should make ping', function (done) {
+        it('should make ping', function(done) {
             var scope = nock(MARATHON_HOST)
                 .get('/ping')
                 .reply(200, 'pong');
@@ -26,7 +26,7 @@ describe('marathon', function() {
             }
         });
 
-        it('should make ping with timeout & rely pong', function (done) {
+        it('should make ping with timeout & rely pong', function(done) {
             var scope = nock(MARATHON_HOST)
                 .get('/ping')
                 .delayConnection(1000)
@@ -41,7 +41,7 @@ describe('marathon', function() {
             }
         });
 
-        it('should report ETIMEDOUT on timeout', function (done) {
+        it('should report ETIMEDOUT on timeout', function(done) {
             var scope = nock(MARATHON_HOST)
                 .get('/ping')
                 .delayConnection(3000)
@@ -56,7 +56,7 @@ describe('marathon', function() {
             }
         });
 
-        it('should make ping with timeout', function (done) {
+        it('should make ping with timeout', function(done) {
             var scope = nock(MARATHON_HOST)
                 .get('/ping')
                 .reply(400, 'no-response');
@@ -80,21 +80,21 @@ describe('config', function() {
     var Marathon = require('../lib/marathon.js');
     var nock = require('nock');
 
-    it('should allow marathon urls with paths', function (done) {
-      var MARATHON_HOST='http://01.02.03.04:5678';
-      var pathedUrl = MARATHON_HOST + '/service/marathon';
+    it('should allow marathon urls with paths', function(done) {
+        var MARATHON_HOST = 'http://01.02.03.04:5678';
+        var pathedUrl = MARATHON_HOST + '/service/marathon';
 
-      var scope = nock(MARATHON_HOST)
-          .get('/service/marathon/ping')
-          .reply(200, 'pong');
+        var scope = nock(MARATHON_HOST)
+            .get('/service/marathon/ping')
+            .reply(200, 'pong');
 
-      var marathon = new Marathon(pathedUrl);
-      marathon.misc.ping().then(onSuccess).done();
+        var marathon = new Marathon(pathedUrl);
+        marathon.misc.ping().then(onSuccess).done();
 
-      function onSuccess(data) {
-          expect(data).toEqual('pong');
-          expect(scope.isDone()).toEqual(true);
-          done();
-      }
+        function onSuccess(data) {
+            expect(data).toEqual('pong');
+            expect(scope.isDone()).toEqual(true);
+            done();
+        }
     });
 });

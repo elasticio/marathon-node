@@ -344,69 +344,143 @@ describe('marathon-node', function() {
         });
     });
 
-    describe('ping', function() {
-        it('should make ping', function() {
-            var scope = nock(MARATHON_HOST)
-                .get('/ping')
-                .reply(200, 'pong');
+    describe('subscriptions', function() {
+        describe('#getList()', function() {
+            it('should get list of event subscriptions', function() {
+                var response = {
+                    callbackUrls: [
+                        'http://server123:9090/callback',
+                        'http://server234:9191/callback'
+                    ]
+                };
 
-            return marathon.misc.ping()
-                .then(onSuccess);
+                var scope = nock(MARATHON_HOST)
+                    .get('/v2/eventSubscriptions')
+                    .reply(200, response);
 
-            function onSuccess(data) {
-                expect(data).to.equal('pong');
-                expect(scope.isDone()).to.be.true;
-            }
+                return marathon.subscriptions.getList().then(onSuccess);
+
+                function onSuccess(data) {
+                    expect(data).to.deep.equal(response);
+                    expect(scope.isDone()).to.be.true;
+                }
+            });
         });
 
-        it('should make ping with timeout & rely pong', function() {
-            var scope = nock(MARATHON_HOST)
-                .get('/ping')
-                .delayConnection(10)
-                .reply(200, 'pong');
+        describe('#create()', function() {
+            it('should create new subscription', function() {
+                var response = {
+                    callbackUrl: 'http://localhost:9292/callback',
+                    clientIp: '127.0.0.1',
+                    eventType: 'subscribe_event'
+                };
 
-            return marathon.misc.ping({timeout: 20})
-                .then(onSuccess);
+                var callbackUrl = 'http://localhost:9292/callback';
 
-            function onSuccess(data) {
-                expect(data).to.equal('pong');
-                expect(scope.isDone()).to.be.true;
-            }
+                var scope = nock(MARATHON_HOST)
+                    .post('/v2/eventSubscriptions')
+                    .query({callbackUrl: callbackUrl})
+                    .reply(200, response);
+
+                return marathon.subscriptions.create(callbackUrl).then(onSuccess);
+
+                function onSuccess(data) {
+                    expect(data).to.deep.equal(response);
+                    expect(scope.isDone()).to.be.true;
+                }
+            });
         });
 
-        it('should report ETIMEDOUT on timeout', function() {
-            var scope = nock(MARATHON_HOST)
-                .get('/ping')
-                .delayConnection(30)
-                .reply(200, 'pong');
+        describe('#delete()', function() {
+            it('should delete new subscription', function() {
+                var response = {
+                    callbackUrl: 'http://localhost:9292/callback',
+                    clientIp: '127.0.0.1',
+                    eventType: 'unsubscribe_event'
+                };
 
-            return marathon.misc.ping({timeout: 10})
-                .then(expectError)
-                .catch(onError);
+                var callbackUrl = 'http://localhost:9292/callback';
 
-            function onError(err) {
-                expect(err.message).to.equal('Marathon response was: Error: ETIMEDOUT');
-                expect(scope.isDone()).to.be.true;
-            }
+                var scope = nock(MARATHON_HOST)
+                    .delete('/v2/eventSubscriptions')
+                    .query({callbackUrl: callbackUrl})
+                    .reply(200, response);
+
+                return marathon.subscriptions.delete(callbackUrl).then(onSuccess);
+
+                function onSuccess(data) {
+                    expect(data).to.deep.equal(response);
+                    expect(scope.isDone()).to.be.true;
+                }
+            });
         });
+    });
 
-        it('should make ping with timeout', function() {
-            var scope = nock(MARATHON_HOST)
-                .get('/ping')
-                .reply(400, 'no-response');
+    describe('misc', function() {
+        describe('#ping()', function() {
+            it('should make ping', function() {
+                var scope = nock(MARATHON_HOST)
+                    .get('/ping')
+                    .reply(200, 'pong');
 
-            function onError(err) {
-                expect(scope.isDone()).to.be.true;
-                expect(err.name).to.equal('StatusCodeError');
-                expect(err.message).to.equal('Marathon response was: 400 - "no-response"');
-                expect(err.statusCode).to.equal(400);
-                expect(err.options.url).to.equal('http://01.02.03.04:5678/ping');
-                expect(err.options.timeout).to.equal(2000);
-            }
+                return marathon.misc.ping()
+                    .then(onSuccess);
 
-            return marathon.misc.ping({timeout: 2000})
-                .then(expectError)
-                .catch(onError);
+                function onSuccess(data) {
+                    expect(data).to.equal('pong');
+                    expect(scope.isDone()).to.be.true;
+                }
+            });
+
+            it('should make ping with timeout & rely pong', function() {
+                var scope = nock(MARATHON_HOST)
+                    .get('/ping')
+                    .delayConnection(10)
+                    .reply(200, 'pong');
+
+                return marathon.misc.ping({timeout: 20})
+                    .then(onSuccess);
+
+                function onSuccess(data) {
+                    expect(data).to.equal('pong');
+                    expect(scope.isDone()).to.be.true;
+                }
+            });
+
+            it('should report ETIMEDOUT on timeout', function() {
+                var scope = nock(MARATHON_HOST)
+                    .get('/ping')
+                    .delayConnection(30)
+                    .reply(200, 'pong');
+
+                return marathon.misc.ping({timeout: 10})
+                    .then(expectError)
+                    .catch(onError);
+
+                function onError(err) {
+                    expect(err.message).to.equal('Marathon response was: Error: ETIMEDOUT');
+                    expect(scope.isDone()).to.be.true;
+                }
+            });
+
+            it('should make ping with timeout', function() {
+                var scope = nock(MARATHON_HOST)
+                    .get('/ping')
+                    .reply(400, 'no-response');
+
+                function onError(err) {
+                    expect(scope.isDone()).to.be.true;
+                    expect(err.name).to.equal('StatusCodeError');
+                    expect(err.message).to.equal('Marathon response was: 400 - "no-response"');
+                    expect(err.statusCode).to.equal(400);
+                    expect(err.options.url).to.equal('http://01.02.03.04:5678/ping');
+                    expect(err.options.timeout).to.equal(2000);
+                }
+
+                return marathon.misc.ping({timeout: 2000})
+                    .then(expectError)
+                    .catch(onError);
+            });
         });
     });
 

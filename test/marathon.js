@@ -458,7 +458,7 @@ describe('marathon-node', function() {
                     .catch(onError);
 
                 function onError(err) {
-                    expect(err.message).to.equal('Marathon response was: Error: ETIMEDOUT');
+                    expect(err.message).to.equal('Error: ETIMEDOUT');
                     expect(scope.isDone()).to.be.true;
                 }
             });
@@ -471,7 +471,7 @@ describe('marathon-node', function() {
                 function onError(err) {
                     expect(scope.isDone()).to.be.true;
                     expect(err.name).to.equal('StatusCodeError');
-                    expect(err.message).to.equal('Marathon response was: 400 - "no-response"');
+                    expect(err.message).to.equal('400 - "no-response"');
                     expect(err.statusCode).to.equal(400);
                     expect(err.options.url).to.equal('http://01.02.03.04:5678/ping');
                     expect(err.options.timeout).to.equal(2000);

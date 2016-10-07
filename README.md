@@ -11,6 +11,12 @@ marathon.app
 
 ## Methods
 
+`marathon(url: string, options: object)`
+
+#### Options
+- `options.username`
+- `options.password`
+
 #### Apps (marathon.app.methodName)
 - `getList(parameters)`
 - `getOne(id)`

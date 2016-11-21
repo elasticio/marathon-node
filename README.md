@@ -2,12 +2,30 @@
 Node.js client library for Mesos Marathon's REST API powered by Bluebird promises.
 
 ```javascript
-var marathon = require('marathon-node')(MARATHON_URL);
+const opts = {};
+const marathon = require('marathon-node')(MARATHON_URL, opts);
 marathon.app
   .getList()
   .then(console.log)
   .catch(console.error);
 ```
+
+## Options
+Options passed to [request](https://github.com/request/request) lib. Overview of all the options is [here](https://github.com/request/request#requestoptions-callback).
+
+***HTTP Authentication example:***
+```javascript
+const opts = {
+    auth: {
+        user: 'foo',
+        pass: 'baz'
+    }
+};
+```
+
+***Other options:***
+- `logTime` - if `true`, logs requests time to console
+
 
 ## Methods
 

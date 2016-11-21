@@ -502,5 +502,27 @@ describe('marathon-node', function() {
             return marathon.misc.ping()
                 .then(onSuccess);
         });
+
+        it('should support HTTP Authentication', function() {
+            var scope = nock(MARATHON_HOST)
+                .matchHeader('Authorization', /Basic\ */g)
+                .get('/ping')
+                .reply(200, 'pong');
+
+            var marathon = new Marathon(MARATHON_HOST, {
+                auth: {
+                    user: 'user1',
+                    pass: 'pass1'
+                }
+            });
+
+            function onSuccess(data) {
+                expect(data).to.equal('pong');
+                expect(scope.isDone()).to.be.true;
+            }
+
+            return marathon.misc.ping()
+                .then(onSuccess);
+        });
     });
 });

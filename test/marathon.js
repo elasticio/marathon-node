@@ -432,7 +432,7 @@ describe('marathon-node', function() {
                 }
             });
 
-            it('should make ping with timeout & rely pong', function() {
+            it('should make ping with timeout & reply pong', function() {
                 var scope = nock(MARATHON_HOST)
                     .get('/ping')
                     .delayConnection(10)
@@ -493,6 +493,28 @@ describe('marathon-node', function() {
                 .reply(200, 'pong');
 
             var marathon = new Marathon(pathedUrl);
+
+            function onSuccess(data) {
+                expect(data).to.equal('pong');
+                expect(scope.isDone()).to.be.true;
+            }
+
+            return marathon.misc.ping()
+                .then(onSuccess);
+        });
+
+        it('should support HTTP Authentication', function() {
+            var scope = nock(MARATHON_HOST)
+                .matchHeader('Authorization', 'Basic dXNlcjE6cGFzczE=')
+                .get('/ping')
+                .reply(200, 'pong');
+
+            var marathon = new Marathon(MARATHON_HOST, {
+                auth: {
+                    user: 'user1',
+                    pass: 'pass1'
+                }
+            });
 
             function onSuccess(data) {
                 expect(data).to.equal('pong');

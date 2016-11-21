@@ -20,7 +20,8 @@
   "homepage": "https://github.com/elasticio/marathon-node",
   "dependencies": {
     "lodash": "^4.0.0",
-    "request-promise": "^3.0.0"
+    "request-promise": "^3.0.0",
+    "request": "2.75.x"
   },
   "devDependencies": {
     "chai": "^3.5.0",

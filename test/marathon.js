@@ -432,7 +432,7 @@ describe('marathon-node', function() {
                 }
             });
 
-            it('should make ping with timeout & rely pong', function() {
+            it('should make ping with timeout & reply pong', function() {
                 var scope = nock(MARATHON_HOST)
                     .get('/ping')
                     .delayConnection(10)

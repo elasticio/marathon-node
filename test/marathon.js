@@ -505,7 +505,7 @@ describe('marathon-node', function() {
 
         it('should support HTTP Authentication', function() {
             var scope = nock(MARATHON_HOST)
-                .matchHeader('Authorization', /Basic\ */g)
+                .matchHeader('Authorization', 'Basic dXNlcjE6cGFzczE=')
                 .get('/ping')
                 .reply(200, 'pong');
 

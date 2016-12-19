@@ -47,6 +47,8 @@ const opts = {
 #### Tasks (marathon.tasks.methodName)
 
 #### Deployments (marathon.deployments.methodName)
+- `getList()`
+- `destroy(id)`
 
 #### Subscriptions (marathon.subscriptions.methodName)
 - `getList()`

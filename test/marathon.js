@@ -418,6 +418,46 @@ describe('marathon-node', function() {
         });
     });
 
+    describe('leader', function() {
+        describe('#get()', function() {
+            it('should get the current leader', function() {
+                var response = {
+                    leader: '127.0.0.1:8080'
+                };
+
+                var scope = nock(MARATHON_HOST)
+                    .get('/v2/leader')
+                    .reply(200, response);
+
+                return marathon.leader.get().then(onSuccess);
+
+                function onSuccess(data) {
+                    expect(data).to.deep.equal(response);
+                    expect(scope.isDone()).to.be.true;
+                }
+            });
+        });
+
+        describe('#abdicate()', function() {
+            it('should cause the current leader to abdicate', function() {
+                var response = {
+                    message: 'Leadership abdicated'
+                };
+
+                var scope = nock(MARATHON_HOST)
+                    .delete('/v2/leader')
+                    .reply(200, response);
+
+                return marathon.leader.abdicate().then(onSuccess);
+
+                function onSuccess(data) {
+                    expect(data).to.deep.equal(response);
+                    expect(scope.isDone()).to.be.true;
+                }
+            });
+        });
+    });
+
     describe('subscriptions', function() {
         describe('#getList()', function() {
             it('should get list of event subscriptions', function() {

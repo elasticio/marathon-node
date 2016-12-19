@@ -58,4 +58,8 @@ const opts = {
 
 ### Info (marathon.info.methodName)
 
+### Leader (marathon.leader.methodName)
+- `get()`
+- `abdicate()`
+
 ### Miscellaneous (marathon.misc.methodName)

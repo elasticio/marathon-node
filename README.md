@@ -43,6 +43,11 @@ const opts = {
 - `killTask(id, task, scale)`
 
 #### Groups (marathon.groups.methodName)
+- `getList()`
+- `create(body)`
+- `getOne(id)`
+- `update(id, body)`
+- `destroy(id)`
 
 #### Tasks (marathon.tasks.methodName)
 - `getList()`

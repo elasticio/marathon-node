@@ -76,3 +76,4 @@ const opts = {
 - `abdicate()`
 
 ### Miscellaneous (marathon.misc.methodName)
+- `ping()`

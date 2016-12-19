@@ -989,39 +989,45 @@ describe('marathon-node', function() {
     describe('misc', function() {
         describe('#ping()', function() {
             it('should make ping', function() {
+                var response = 'pong';
+
                 var scope = nock(MARATHON_HOST)
                     .get('/ping')
-                    .reply(200, 'pong');
+                    .reply(200, response);
 
                 return marathon.misc.ping()
                     .then(onSuccess);
 
                 function onSuccess(data) {
-                    expect(data).to.equal('pong');
+                    expect(data).to.equal(response);
                     expect(scope.isDone()).to.be.true;
                 }
             });
 
             it('should make ping with timeout & reply pong', function() {
+                var response = 'pong';
+
                 var scope = nock(MARATHON_HOST)
                     .get('/ping')
                     .delayConnection(10)
-                    .reply(200, 'pong');
+                    .reply(200, response);
 
                 return marathon.misc.ping({timeout: 20})
                     .then(onSuccess);
 
                 function onSuccess(data) {
-                    expect(data).to.equal('pong');
+                    expect(data).to.equal(response);
                     expect(scope.isDone()).to.be.true;
                 }
             });
 
             it('should report ETIMEDOUT on timeout', function() {
+                var response = 'pong';
+
                 var scope = nock(MARATHON_HOST)
                     .get('/ping')
                     .delayConnection(30)
-                    .reply(200, 'pong');
+                    .reply(200, response);
 
                 return marathon.misc.ping({timeout: 10})
                     .then(expectError)

@@ -75,5 +75,5 @@ const opts = {
 - `get()`
 - `abdicate()`
 
-### Miscellaneous (marathon.misc.methodName)
+#### Miscellaneous (marathon.misc.methodName)
 - `ping()`

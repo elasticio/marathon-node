@@ -57,7 +57,10 @@ const opts = {
 - `getList()`
 - `destroy(id)`
 
-#### Subscriptions (marathon.subscriptions.methodName)
+#### Event Stream (marathon.events.methodName)
+- `attach()`
+
+#### Event Subscriptions (marathon.subscriptions.methodName)
 - `getList()`
 - `create(callbackUrl)`
 
@@ -65,7 +68,7 @@ const opts = {
 - `get()`
 - `resetDelay(appId)`
 
-#### Info (marathon.info.methodName)
+#### Server Info (marathon.info.methodName)
 - `get()`
 
 #### Leader (marathon.leader.methodName)

@@ -56,9 +56,10 @@ const opts = {
 
 #### Queue (marathon.queue.methodName)
 
-### Info (marathon.info.methodName)
+#### Info (marathon.info.methodName)
+- `get()`
 
-### Leader (marathon.leader.methodName)
+#### Leader (marathon.leader.methodName)
 - `get()`
 - `abdicate()`
 

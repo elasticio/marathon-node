@@ -45,6 +45,8 @@ const opts = {
 #### Groups (marathon.groups.methodName)
 
 #### Tasks (marathon.tasks.methodName)
+- `getList()`
+- `kill(body, scale, wipe)`
 
 #### Deployments (marathon.deployments.methodName)
 - `getList()`

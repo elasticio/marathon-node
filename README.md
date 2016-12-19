@@ -57,6 +57,8 @@ const opts = {
 - `create(callbackUrl)`
 
 #### Queue (marathon.queue.methodName)
+- `get()`
+- `resetDelay(appId)`
 
 #### Info (marathon.info.methodName)
 - `get()`

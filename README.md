@@ -43,17 +43,37 @@ const opts = {
 - `killTask(id, task, scale)`
 
 #### Groups (marathon.groups.methodName)
+- `getList()`
+- `create(body)`
+- `getOne(id)`
+- `update(id, body)`
+- `destroy(id)`
 
 #### Tasks (marathon.tasks.methodName)
+- `getList()`
+- `kill(body, scale, wipe)`
 
 #### Deployments (marathon.deployments.methodName)
+- `getList()`
+- `destroy(id)`
 
-#### Subscriptions (marathon.subscriptions.methodName)
+#### Event Stream (marathon.events.methodName)
+- `attach()`
+
+#### Event Subscriptions (marathon.subscriptions.methodName)
 - `getList()`
 - `create(callbackUrl)`
 
 #### Queue (marathon.queue.methodName)
+- `get()`
+- `resetDelay(appId)`
 
-### Info (marathon.info.methodName)
+#### Server Info (marathon.info.methodName)
+- `get()`
 
-### Miscellaneous (marathon.misc.methodName)
+#### Leader (marathon.leader.methodName)
+- `get()`
+- `abdicate()`
+
+#### Miscellaneous (marathon.misc.methodName)
+- `ping()`

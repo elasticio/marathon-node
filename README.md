@@ -29,7 +29,7 @@ const opts = {
 
 ## Methods
 
-#### Apps (marathon.app.methodName)
+#### Apps (marathon.apps.methodName)
 - `getList(parameters)`
 - `getOne(id)`
 - `getVersions(id)`
@@ -46,8 +46,8 @@ const opts = {
 - `getList()`
 - `create(body)`
 - `getOne(id)`
-- `update(id, body)`
-- `destroy(id)`
+- `update(id, body, force)`
+- `destroy(id, force)`
 
 #### Tasks (marathon.tasks.methodName)
 - `getList()`

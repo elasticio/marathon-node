@@ -14,18 +14,17 @@ describe('events', function() {
 
     describe('#attach()', function() {
         it('should attach to the event stream', function() {
-            var response = {};
-
             var scope = nock(MARATHON_HOST)
+                .matchHeader('Accept', 'text/event-stream')
                 .get('/v2/events')
-                .reply(200, response);
+                .reply(200);
 
-            return marathon.events.attach().then(onSuccess);
-
-            function onSuccess(data) {
-                expect(data).to.deep.equal(response);
+            function onSuccess(stream) {
+                expect(stream.statusCode).to.equal(200);
                 expect(scope.isDone()).to.be.true;
             }
+
+            return marathon.events.attach().then(onSuccess);
         });
     });
 });

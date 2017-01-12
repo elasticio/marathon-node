@@ -26,6 +26,39 @@ const opts = {
 ***Other options:***
 - `logTime` - if `true`, logs requests time to console
 
+## Marathon Event Bus
+
+When we attach to the [Marathon Event Bus](https://mesosphere.github.io/marathon/docs/event-bus.html) (from the Nodejs perspective) we receive a [Readable Stream](https://nodejs.org/api/stream.html#stream_readable_streams) object.
+
+***Attaching to Event Bus example:***
+
+```javascript
+const marathon = require('marathon-node')(MARATHON_URL, opts);
+
+marathon.events.attach()
+	.then(function(stream) {
+		// Forces the stream to receive a String instead of a Buffer object
+		stream.setEncoding('utf-8');
+
+		// Event that receives data from Marathon
+		stream.on('data', function(chunk) {
+			// Printing the event received from the stream
+			console.log(chunk);
+		});
+
+		// Last event, it runs when the connection is closed
+		stream.on('end', function() {
+			// Here you do what you need when it ends...
+		});
+
+		// If for some reason we receive an error while connected, we can handle it here
+		stream.on('errror', function(err) {
+			// Error handling...
+		})
+	}).catch(function(err) {
+		// Any problem while trying to connect to /v2/events
+	});
+```
 
 ## Methods
 

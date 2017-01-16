@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/elasticio/marathon-node",
   "dependencies": {
+    "bluebird": "^3.4.7",
     "lodash": "^4.0.0",
     "request-promise": "^3.0.0",
     "request": "2.75.x"

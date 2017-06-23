@@ -36,7 +36,7 @@ To manage event stream [EventSource](https://github.com/EventSource/eventsource)
 const marathon = require('marathon-node')(MARATHON_URL, opts);
 
 const eventSourceOpts = {
-    eventType: ['status_update_event'], // (string|array) Marathon will stream only this kind of events (optional)
+    eventType: ['status_update_event'], // (string|array) Marathon will stream only this kind of events. (optional, Marathon >= 1.3.7)
     proxy: 'http://your.proxy.com' // (string) Proxy host (optional)
 };
 const es = marathon.events.createEventSource(eventSourceOpts);

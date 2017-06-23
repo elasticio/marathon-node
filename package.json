@@ -6,7 +6,8 @@
   "scripts": {
     "pretest": "jscs lib --fix",
     "test": "mocha",
-    "prepublishOnly": "npm test"
+    "prepublishOnly": "npm test",
+    "postpublish": "./postpublish.js"
   },
   "repository": {
     "type": "git",

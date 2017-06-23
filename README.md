@@ -28,37 +28,24 @@ const opts = {
 
 ## Marathon Event Bus
 
-When we attach to the [Marathon Event Bus](https://mesosphere.github.io/marathon/docs/event-bus.html) (from the Nodejs perspective) we receive a [Readable Stream](https://nodejs.org/api/stream.html#stream_readable_streams) object.
+To manage event stream [EventSource](https://github.com/EventSource/eventsource) client is used.
 
-***Attaching to Event Bus example:***
+***Example:***
 
 ```javascript
 const marathon = require('marathon-node')(MARATHON_URL, opts);
 
-marathon.events.attach()
-	.then(function(stream) {
-		// Forces the stream to receive a String instead of a Buffer object
-		stream.setEncoding('utf-8');
-
-		// Event that receives data from Marathon
-		stream.on('data', function(chunk) {
-			// Printing the event received from the stream
-			console.log(chunk);
-		});
-
-		// Last event, it runs when the connection is closed
-		stream.on('end', function() {
-			// Here you do what you need when it ends...
-		});
-
-		// If for some reason we receive an error while connected, we can handle it here
-		stream.on('errror', function(err) {
-			// Error handling...
-		})
-	}).catch(function(err) {
-		// Any problem while trying to connect to /v2/events
-	});
+const eventSourceOpts = {
+    eventType: ['status_update_event'], // (string|array) Marathon will stream only this kind of events (optional)
+    proxy: 'http://your.proxy.com' // (string) Proxy host (optional)
+};
+const es = marathon.events.createEventSource(eventSourceOpts);
+es.addEventListener('status_update_event', event => console.log('status_update_event'));
+es.on('open', () => console.log('opened'));
+es.on('error', err => console.error(err));
 ```
+
+You can find more info in the official documentation [Marathon Event Bus docs](https://mesosphere.github.io/marathon/docs/event-bus.html).
 
 ## Methods
 
@@ -91,7 +78,8 @@ marathon.events.attach()
 - `destroy(id)`
 
 #### Event Stream (marathon.events.methodName)
-- `attach()`
+- `attach()` (deprecated)
+- `createEventSource(opts)`
 
 #### Event Subscriptions (marathon.subscriptions.methodName)
 - `getList()`

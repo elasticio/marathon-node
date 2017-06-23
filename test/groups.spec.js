@@ -223,7 +223,7 @@ describe('groups', function() {
             var groupId = '/product/service/app';
 
             var scope = nock(MARATHON_HOST)
-                .delete('/v2/groups/' + groupId)
+                .delete('/v2/groups' + groupId)
                 .query({
                     force: true
                 })

@@ -126,7 +126,7 @@ describe('apps', function() {
             var appId = '/tools/docker/registry';
 
             var scope = nock(MARATHON_HOST)
-                .put('/v2/apps/' + appId, appConfig)
+                .put('/v2/apps' + appId, appConfig)
                 .query({
                     force: true
                 })
@@ -151,7 +151,7 @@ describe('apps', function() {
             var appId = '/tools/docker/registry';
 
             var scope = nock(MARATHON_HOST)
-                .delete('/v2/apps/' + appId)
+                .delete('/v2/apps' + appId)
                 .query({
                     force: true
                 })
@@ -176,7 +176,7 @@ describe('apps', function() {
             var appId = '/tools/docker/registry';
 
             var scope = nock(MARATHON_HOST)
-                .post('/v2/apps/' + appId + '/restart')
+                .post('/v2/apps' + appId + '/restart')
                 .query({
                     force: true
                 })

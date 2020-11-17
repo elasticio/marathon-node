@@ -63,7 +63,7 @@ describe('misc', function() {
                 .catch(onError);
 
             function onError(err) {
-                expect(err.message).to.equal('Error: ETIMEDOUT');
+                expect(err.message).to.equal('Error: ESOCKETTIMEDOUT');
                 expect(scope.isDone()).to.be.true;
             }
         });

@@ -22,7 +22,7 @@
   "dependencies": {
     "bluebird": "3.7.2",
     "eventsource": "1.0.7",
-    "lodash": "4.17.20",
+    "lodash": "4.17.21",
     "request": "2.87.0",
     "request-promise": "3.0.0"
   },

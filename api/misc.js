@@ -3,9 +3,9 @@
 class MarathonApiMiscEndpoints {
   constructor (ctx) { // accepts a parent context
     this.parent = ctx
-    this.client = ctx.http
-    this.baseURL = new URL(this.client.defaults.baseURL)
+    this.baseURL = ctx.baseURL
     this.baseURL.pathname = '/' // these endpoints don't get the version prefix
+    this.client = ctx.http
     this.client.defaults.baseURL = this.baseURL.toString()
   }
 

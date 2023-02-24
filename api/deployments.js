@@ -5,7 +5,7 @@ class MarathonApiDeploymentEndpoints {
     this.parent = ctx
     this.baseURL = ctx.baseURL
     this.baseURL.pathname = `${ctx.basePath}/deployments`
-    this.client = ctx.http.create()
+    this.client = ctx.http
     this.client.defaults.baseURL = this.baseURL.toString()
   }
 

@@ -36,20 +36,24 @@ axios.defaults.headers.delete['Content-Type'] = contentType
 class MarathonApi {
   get basePath () { return `/${MARATHON_API_VERSION}` }
 
-  constructor (baseURL, opts = {}) {
-    this.baseURL = new URL(`${baseURL}`) // if it's already a url object create a new copy
-    this.logTime = opts.logTime
-    this.baseURL.pathname = this.basePath
-    const baseOpts = omit(opts, 'logTime') // setup options without the logTime
-
-    this.http = axios.create({
-      ...baseOpts,
-      baseURL: this.baseURL.toString() // axios needs a string
+  get http () { // returns an http client
+    const client = axios.create({
+      ...this.defaults,
+      baseURL: this.baseURL.toString()
     })
     if (this.logTime) {
-      this.http.interceptors.response.use(this.timeTracker)
-      this.http.interceptors.request.use(this.timeTracker)
+      client.interceptors.request.use(async config => this.timeTracker(config))
+      client.interceptors.response.use(async res => this.timeTracker(res))
     }
+    return client
+  }
+
+  constructor (baseURL, opts = {}) {
+    this.logTime = opts.logTime
+    this.defaults = omit(opts, 'logTime') // setup options without the logTime
+
+    this.baseURL = new URL(`${baseURL}`) // if it's already a url object create a new copy
+    this.baseURL.pathname = this.basePath
 
     // initialize the api endpoints
     this.app = new MarathonApiAppEndpoints(this)
@@ -62,18 +66,19 @@ class MarathonApi {
     this.queue = new MarathonApiQueueEndpoints(this)
     this.misc = new MarathonApiMiscEndpoints(this)
     this.leader = new MarathonApiLeaderEndpoints(this)
+    this.timers = {} // key/object pairing of timer tokens
   }
 
-  set timeToken (newtoken) { this[_timeToken] = newtoken }
-  get timeToken () { return this[_timeToken] }
-
   async timeTracker (c) {
-    if (this.logTime && c?.url) {
-      this.timeToken = `Marathon Request: ${c.url}`
-      // assume it's on the request side
-      console.time(this.timeToken)
+    if (this.logTime && !c.status) {
+      const { pathname } = new URL(c.baseURL)
+      if (!(pathname in this.timers)) {
+        this.timers[pathname] = `Marathon Request Timer: ${pathname}`
+      }
+      console.time(this.timers[pathname])
     } else if (this.logTime && c?.status) {
-      console.timeEnd(this.timeToken)
+      const { request: { path } } = c
+      console.timeEnd(this.timers[path])
     }
     return c
   }

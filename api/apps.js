@@ -5,14 +5,12 @@ class MarathonApiAppEndpoints {
     this.parent = ctx
     this.baseURL = ctx.baseURL
     this.baseURL.pathname = `${ctx.basePath}/apps`
-    this.client = ctx.http.create()
-    this.client.interceptors = ctx.http.interceptors
+    this.client = ctx.http
     this.client.defaults.baseURL = this.baseURL.toString()
   }
 
   async getList (query = {}) {
     const params = new URLSearchParams(Object.entries(query))
-    console.log({ clientDefaults: this.client.defaults })
     const { data } = await this.client.get('', { params })
     return data
   }

@@ -5,7 +5,7 @@ class MarathonApiLeaderEndpoints {
     this.parent = ctx
     this.baseURL = ctx.baseURL
     this.baseURL.pathname = `${ctx.basePath}/leader`
-    this.client = ctx.http.create()
+    this.client = ctx.http
     this.client.defaults.baseURL = this.baseURL.toString()
   }
 

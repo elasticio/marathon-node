@@ -9,14 +9,16 @@ class MarathonApiMiscEndpoints {
     this.client.defaults.baseURL = this.baseURL.toString()
   }
 
-  async ping () {
+  async ping (timeout = 300) {
     this.timeToken = '/ping'
-    return this.client.get('ping')
+    const { data } = await this.client.get('ping', { timeout })
+    return data
   }
 
   async metrics () {
     this.timeToken = '/metrics'
-    return this.client.get('metrics')
+    const { data } = await this.client.get('metrics')
+    return data
   }
 }
 

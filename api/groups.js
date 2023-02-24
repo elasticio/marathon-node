@@ -10,25 +10,30 @@ class MarathonApiGroupEndpoints {
   }
 
   async getList () {
-    return this.client.get()
+    const { data } = await this.client.get()
+    return data
   }
 
-  create (data) {
-    return this.client.post('', { json: data })
+  async create (data) {
+    const { data: result } = await this.client.post('', { json: data })
+    return result
   }
 
-  getOne (groupId) {
-    return this.client.get(groupId)
+  async getOne (groupId) {
+    const { data } = await this.client.get(groupId)
+    return data
   }
 
-  update (groupId, data, force) {
+  async update (groupId, data, force) {
     const params = new URLSearchParams([['force', force]])
-    return this.client.put(groupId, { json: data }, { params })
+    const { data: result } = await this.client.put(groupId, { json: data }, { params })
+    return result
   }
 
   async destroy (groupId, force) {
     const params = new URLSearchParams([['force', force]])
-    return this.client.delete(groupId, undefined, { params })
+    const { data } = await this.client.delete(groupId, undefined, { params })
+    return data
   }
 }
 

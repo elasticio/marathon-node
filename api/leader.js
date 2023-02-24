@@ -10,11 +10,13 @@ class MarathonApiLeaderEndpoints {
   }
 
   async get () {
-    return this.client.get()
+    const { data } = await this.client.get()
+    return data
   }
 
   async abdicate () {
-    return this.client.delete()
+    const { data } = await this.client.delete()
+    return data
   }
 }
 

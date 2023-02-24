@@ -10,12 +10,14 @@ class MarathonApiDeploymentEndpoints {
   }
 
   async getList () {
-    return this.client.get()
+    const { data } = await this.client.get()
+    return data
   }
 
   async destroy (deploymentId, force) {
     const params = new URLSearchParams([['force', force]])
-    return this.client.delete(deploymentId, { params })
+    const { data } = await this.client.delete(deploymentId, { params })
+    return data
   }
 }
 

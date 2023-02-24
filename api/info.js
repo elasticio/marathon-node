@@ -9,8 +9,9 @@ class MarathonApiInfoEndpoints {
     this.client.defaults.baseURL = this.baseURL.toString()
   }
 
-  async get () {
-    return this.client.get()
+  async get (timeout = 1000) {
+    const { data } = await this.client.get('', { timeout })
+    return data
   }
 }
 

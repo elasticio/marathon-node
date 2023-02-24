@@ -10,11 +10,13 @@ class MarathonApiQueueEndpoints {
   }
 
   async get () {
-    return this.client.get()
+    const { data } = await this.client.get()
+    return data
   }
 
   async resetDelay (appId) {
-    return this.client.delete(`${appId}/delay`)
+    const { data } = await this.client.delete(`${appId}/delay`)
+    return data
   }
 }
 

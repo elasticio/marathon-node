@@ -10,12 +10,14 @@ class MarathonApiTaskEndpoints {
   }
 
   async getList () {
-    return this.client.get()
+    const { data } = await this.client.get()
+    return data
   }
 
   async kill (data, scale, wipe) {
     const params = new URLSearchParams(Object.entries({ scale, wipe }))
-    return this.client.post('delete', { json: data }, { params })
+    const { data: result } = await this.client.post('delete', { json: data }, { params })
+    return result
   }
 }
 

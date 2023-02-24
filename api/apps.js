@@ -13,62 +13,73 @@ class MarathonApiAppEndpoints {
   async getList (query = {}) {
     const params = new URLSearchParams(Object.entries(query))
     console.log({ clientDefaults: this.client.defaults })
-    return this.client.get('', { params })
+    const { data } = await this.client.get('', { params })
+    return data
   }
 
   async create (data) {
-    return this.client.post('', data)
+    const { data: result } = await this.client.post('', data)
+    return result
   }
 
   async getOne (appId, query = {}) {
     const params = new URLSearchParams(Object.entries(query))
     const path = encodeURIComponent(appId)
-    return this.client.get(path, { params })
+    const { data } = await this.client.get(path, { params })
+    return data
   }
 
   async update (appId, data, force) {
     const params = new URLSearchParams([['force', !!force]])
     const path = encodeURIComponent(appId)
-    return this.client.put(path, data, { params })
+    const { data: result } = await this.client.put(path, data, { params })
+    return result
   }
 
   async destroy (appId, force) {
     const params = new URLSearchParams([['force', !!force]])
     const path = encodeURIComponent(appId)
-    return this.client.delete(path, undefined, { params })
+    const { data } = await this.client.delete(path, undefined, { params })
+    return data
   }
 
   async restart (appId, force) {
     const params = new URLSearchParams([['force', !!force]])
     const path = `${encodeURIComponent(appId)}/restart`
-    return this.client.post(path, undefined, { params })
+    const { data } = await this.client.post(path, undefined, { params })
+    return data
   }
 
   async getTasks (appId) {
     const path = `${encodeURIComponent(appId)}/tasks`
-    return this.client.get(`${path}/tasks`)
+    const { data } = await this.client.get(`${path}/tasks`)
+    return data
   }
 
   async killTasks (appId, query = {}) {
     const params = new URLSearchParams(Object.entries(query))
     const path = `${encodeURIComponent(appId)}/tasks`
-    return this.client.delete(path, undefined, { params })
+    const { data } = await this.client.delete(path, undefined, { params })
+    return data
   }
 
   async killTask (appId, taskId, scale) {
     const params = new URLSearchParams([['scale', !!scale]])
     const path = `${encodeURIComponent(appId)}/tasks/${taskId}`
-    return this.client.delete(path, undefined, { params })
+    const { data } = await this.client.delete(path, undefined, { params })
+    return data
   }
 
   async getVersions (appId) {
     const path = `${encodeURIComponent(appId)}/versions`
-    return this.client.get(path)
+    const { data } = await this.client.get(path)
+    return data
   }
 
   async getVersion (appId, versionId) {
     const path = `${encodeURIComponent(appId)}/versions/${versionId}`
-    return this.client.get(path)
+    const { data } = await this.client.get(path)
+    return data
   }
 }
 

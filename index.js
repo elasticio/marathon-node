@@ -14,7 +14,7 @@ const MarathonApiMiscEndpoints = require('./api/misc')
 const MarathonApiLeaderEndpoints = require('./api/leader')
 
 // EventSource
-const MarathonEventSource = require('./events')
+const MarathonEventSource = require('./api/events')
 
 // not yet implemented so no need to require here
 // var artifacts = require('./artifacts')

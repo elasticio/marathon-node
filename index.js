@@ -22,7 +22,6 @@ const MarathonEventSource = require('./api/events')
 // helper functions
 const { omit } = require('./lib/nodash')
 
-const _timeToken = Symbol('timetoken')
 const contentType = 'application/json'
 
 // configure axios defaults

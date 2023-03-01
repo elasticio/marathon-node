@@ -22,9 +22,7 @@ class MarathonEventSource {
         this.baseURL.searchParams.set('event_type', eventType)
       } else if (eventType instanceof Array) { // array
         for (const type of eventType) { this.baseURL.searchParams.append('event_type', type) }
-      } else {
-        throw new Error('"eventType" should be an array or string')
-      }
+      } // ignore anything that isn't a string or array
     }
     this.es = new EventSource(`${this.baseURL}`)
     return this.es
